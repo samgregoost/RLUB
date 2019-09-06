@@ -722,41 +722,7 @@ def radial_e(r,n,l):
    #print(k)
         return np.exp((n-1+1)*(-r))
 
-def radial_poly_(rho, m, n):
-        if n == 0 and m == 0:
-                return tf.ones(tf.shape(rho))
-        if n == 1 and m == 1:
-                return rho
-        if n == 2 and m == 0:
-                return 2.0 * tf.pow(rho,2) - 1
-        if n == 2 and m == 2:
-                return tf.pow(rho,2)
-        if n == 3 and m == 1:
-                return 3.0* tf.pow(rho, 3) - 2.0 * rho
-        if n == 3 and m == 3:
-                return tf.pow(rho,3)
-        if n == 4 and m == 0:
-                return 6.0 * tf.pow(rho,4) - 6.0 * tf.pow(rho,2) + 1
-        if n == 4 and m == 2:
-                return 4.0* tf.pow(rho, 3.5) - 3.0 * tf.pow(rho,1.5)
-        if n == 4 and m == 4:
-                return tf.pow(rho,3.5)
-        if n == 5 and m == 1:
-                return 10.0* tf.pow(rho, 4.5) - 12.0 * tf.pow(rho, 2.5) + 3.0 * tf.sqrt(rho+0.0001)
-        if n == 5 and m == 3:
-                return 5.0 * tf.pow(rho, 4.5) - 4.0 * tf.pow(rho, 2.5)
-        if n == 5 and m == 5:
-                return tf.pow(rho,4.5)
-        if n == 6 and m == 2:
-                return 10.0* tf.pow(rho, 5.5) - 20.0 * 10.0* tf.pow(rho, 3.5) + 6.0 * tf.pow(rho,1.5)
-        if n == 6 and m == 4:
-                return 6.0 * tf.pow(rho, 5.5)  - 5.0 * tf.pow(rho,3.5)
-        if n == 6 and m == 6:
-                return tf.pow(rho, 5.5)
-
-
-
-def radial_poly(x,n,l):
+def radial_poly_m(x,n,l):
 	Q00 = tf.constant(radial_e(x,0,0),dtype =tf.float32 )
 	Q10 = tf.constant(radial_e(x,1,0),dtype =tf.float32 )
 	Q11 = tf.constant(radial_e(x,1,1),dtype =tf.float32 )
