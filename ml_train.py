@@ -682,37 +682,39 @@ print(phi)
 def spherical_harmonic(m,l):
 	return math.pow(-1.0,m) * math.sqrt(((2.0*l + 1.0)*7.0/88.0) * (math.factorial(l-m)*1.0/(math.factorial(l+m)*1.0)))  
 	
-def radial_poly_(rho, m, n):
-	if n == 0 and m == 0:
+def radial_poly_(rho, n, l):
+	if n == 0 and l == 0:
 		return tf.ones(tf.shape(rho))
-        if n == 1 and m == 1:
+        if n == 1 and l == 1:
                 return rho
-	if n == 2 and m == 0:
+	if n == 2 and l == 0:
                 return 2.0 * tf.pow(rho,2) - 1
-        if n == 2 and m == 2:
+        if n == 2 and l == 2:
                 return tf.pow(rho,2)
-        if n == 3 and m == 1:
+        if n == 3 and l == 1:
                 return 3.0* tf.pow(rho, 3) - 2.0 * rho
-        if n == 3 and m == 3:
+        if n == 3 and l == 3:
                 return tf.pow(rho,3)
-	if n == 4 and m == 0:
+	if n == 4 and l == 0:
 		return 6.0 * tf.pow(rho,4) - 6.0 * tf.pow(rho,2) + 1
-        if n == 4 and m == 2:
+        if n == 4 and l == 2:
                 return 4.0* tf.pow(rho, 3.5) - 3.0 * tf.pow(rho,1.5)
-        if n == 4 and m == 4:
+        if n == 4 and l == 4:
                 return tf.pow(rho,3.5)
-        if n == 5 and m == 1:
+        if n == 5 and l == 1:
                 return 10.0* tf.pow(rho, 4.5) - 12.0 * tf.pow(rho, 2.5) + 3.0 * tf.sqrt(rho+0.0001)
-        if n == 5 and m == 3:
+        if n == 5 and l == 3:
                 return 5.0 * tf.pow(rho, 4.5) - 4.0 * tf.pow(rho, 2.5)
-        if n == 5 and m == 5:
+        if n == 5 and l == 5:
                 return tf.pow(rho,4.5)
-        if n == 6 and m == 2:
+        if n == 6 and l == 2:
                 return 10.0* tf.pow(rho, 5.5) - 20.0 * 10.0* tf.pow(rho, 3.5) + 6.0 * tf.pow(rho,1.5)
-        if n == 6 and m == 4:
+        if n == 6 and l == 4:
                 return 6.0 * tf.pow(rho, 5.5)  - 5.0 * tf.pow(rho,3.5)
-        if n == 6 and m == 6:
+        if n == 6 and l == 6:
                 return tf.pow(rho, 5.5)
+	else:
+		return 0
 
 
 def radial_e(r,n,l):
@@ -2511,7 +2513,7 @@ def lin_pols_nl(n, l, r):
     """ Wrapper around scipy.special.sph_harm. Return spherical harmonic of degree l and order m. """
     r_grid = r[np.newaxis,np.newaxis,:]
     r_grid_tiled = np.tile(r_grid,(20,20,1))
-    f = tf.expand_dims(tf.expand_dims(radial_poly(r_grid_tiled, n,l), axis = 0), axis = 4)
+    f = tf.expand_dims(tf.expand_dims(radial_poly_(r_grid_tiled, n,l), axis = 0), axis = 4)
   #  print(f.shape)
  #   print(f)
     return f
